@@ -43,16 +43,20 @@ namespace Pijaca
                 throw new ArgumentNullException("Morate unijeti informacije o prodavaču!");
 
             Prodavač postojeći = null;
+            string trazenoIme = p.Ime;
+            double trazeniPromet = p.UkupniPromet;
             foreach (var prodavač in prodavači)
             {
-                if (prodavač.Ime == p.Ime)
+                if (prodavač.Ime == trazenoIme)
                 {
-                    if (p.UkupniPromet < najmanjiPromet)
+                    if (trazeniPromet < najmanjiPromet || prodavač.UkupniPromet < najmanjiPromet)
                         continue;
-                    else if (prodavač.UkupniPromet < najmanjiPromet)
-                        continue;
-                    else if (prodavač.UkupniPromet == p.UkupniPromet)
+
+                    else if (prodavač.UkupniPromet == trazeniPromet)
+                    {
                         postojeći = prodavač;
+                        break;
+                    }
                 }
             }
             if (opcija == "Dodavanje")
