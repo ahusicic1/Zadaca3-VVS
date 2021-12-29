@@ -80,6 +80,50 @@ namespace Pijaca
                 throw new InvalidOperationException("Unijeli ste nepoznatu opciju!");
         }
 
+        public void RadSaProdavačimaTuning2(Prodavač p, string opcija, double najmanjiPromet)
+        {
+            if (p == null)
+                throw new ArgumentNullException("Morate unijeti informacije o prodavaču!");
+
+            Prodavač postojeći = null;
+            string trazenoIme = p.Ime;
+            double trazeniPromet = p.UkupniPromet;
+            foreach (var prodavač in prodavači)
+            {
+                if (prodavač.Ime == trazenoIme)
+                {
+                    if (trazeniPromet < najmanjiPromet || prodavač.UkupniPromet < najmanjiPromet)
+                        continue;
+
+                    else if (prodavač.UkupniPromet == trazeniPromet)
+                    {
+                        postojeći = prodavač;
+                        break;
+                    }
+                }
+            }
+            if (opcija == "Dodavanje")
+            {
+                if (postojeći == null || prodavači.FindAll(prod => prod.Ime == p.Ime).Count == 0)
+                    throw new InvalidOperationException("Nemoguće dodati prodavača kad već postoji registrovan!");
+                else
+                    prodavači.Add(p);
+            }
+            else if (opcija == "Izmjena" || opcija == "Brisanje")
+            {
+                if (postojeći == null || prodavači.FindAll(prod => prod.Ime == p.Ime).Count == 0)
+                    throw new FormatException("Nemoguće izmijeniti tj. obrisati prodavača koji nije registrovan!");
+                else
+                {
+                    prodavači.Remove(postojeći);
+                    if (opcija == "Izmjena")
+                        prodavači.Add(p);
+                }
+            }
+            else
+                throw new InvalidOperationException("Unijeli ste nepoznatu opciju!");
+        }
+
         public void OtvoriŠtand(Prodavač p, List<Proizvod> pr, DateTime rok)
         {
             if (!prodavači.Contains(p))
