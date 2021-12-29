@@ -36,7 +36,7 @@ namespace Pijaca
         #endregion
 
         #region Metode
-
+        
         public void RadSaProdavačima(Prodavač p, string opcija, double najmanjiPromet)
         {
             if (p == null)
@@ -55,7 +55,6 @@ namespace Pijaca
                     else if (prodavač.UkupniPromet == trazeniPromet)
                     {
                         postojeći = prodavač;
-                        break;
                     }
                 }
             }
