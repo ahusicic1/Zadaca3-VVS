@@ -280,6 +280,26 @@ namespace Pijaca
             prodavač.RegistrujPromet(sigurnosniKod, ukupanPromet, najranijaKupovina, najkasnijaKupovina);
         }
 
+        public void IzvršavanjeKupovinaRefactoring(Štand š, List<Kupovina> kupovine, string sigurnosniKod)
+        {
+
+            Štand štand = štandovi.Find(št => št.Prodavač == š.Prodavač);
+            if (štand == null)
+                throw new ArgumentException("Unijeli ste štand koji nije registrovan!");
+
+            DateTime najranijaKupovina = kupovine.Min(x => x.DatumKupovine), najkasnijaKupovina = kupovine.Max(x => x.DatumKupovine);
+            double ukupanPromet = 0;
+
+            foreach (var kupovina in kupovine)
+            {
+                ukupanPromet += kupovina.UkupnaCijena;
+
+                štand.RegistrujKupovinu(kupovina);
+            }
+
+            štand.Prodavač.RegistrujPromet(sigurnosniKod, ukupanPromet, najranijaKupovina, najkasnijaKupovina);
+        }
+
         public void NaručiProizvode(Štand štand, List<Proizvod> proizvodi, List<int> količine, List<DateTime> rokovi, bool svi = false)
         {
             if (proizvodi.Count != količine.Count || proizvodi.Count != rokovi.Count)
