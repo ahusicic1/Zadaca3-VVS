@@ -178,5 +178,61 @@ namespace TestProject2
             trznica.NaručiProizvode(štand, proizvodi, kolicine, rokovi, svi);
             Assert.AreEqual(kupus.OčekivanaKoličina, 0);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestNaruciProizvode1()
+        {
+            Tržnica trznica = new Tržnica();
+            List<Proizvod> proizvodi = new List<Proizvod>() { new Proizvod(Namirnica.Voće, "jabuka", 5, DateTime.Now, 1.5, true) };
+            List<int> kolicine = new List<int>();
+            List<DateTime> rokovi = new List<DateTime>();
+
+            trznica.NaručiProizvode(null, proizvodi, kolicine, rokovi);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestNaruciProizvode2()
+        {
+            Tržnica trznica = new Tržnica();
+            List<Proizvod> proizvodi = new List<Proizvod>() { new Proizvod(Namirnica.Voće, "jabuka", 5, DateTime.Now, 1.5, true) };
+            Štand stand = new Štand(new Prodavač("ime", "123", DateTime.Now.AddDays(-40), 0), DateTime.Now, proizvodi);
+            List<int> kolicine = new List<int>();
+            List<DateTime> rokovi = new List<DateTime>();
+
+            proizvodi.Add(new Proizvod(Namirnica.Voće, "narandza", 5, DateTime.Now, 1.5, true));
+            trznica.NaručiProizvode(stand, proizvodi, kolicine, rokovi);
+        }
+
+        [TestMethod]
+        public void TestNaruciProizvode3()
+        {
+            Tržnica trznica = new Tržnica();
+            List<Proizvod> proizvodi = new List<Proizvod>() { new Proizvod(Namirnica.Voće, "jabuka", 5, DateTime.Now, 1.5, true) };
+            Štand stand = new Štand(new Prodavač("ime", "123", DateTime.Now.AddDays(-40), 0), DateTime.Now, proizvodi);
+            List<int> kolicine = new List<int>() { 4 };
+            List<DateTime> rokovi = new List<DateTime>() { DateTime.Now.AddDays(10) };
+
+            trznica.NaručiProizvode(stand, proizvodi, kolicine, rokovi);
+
+            Assert.AreEqual(stand.Proizvodi[0].OčekivanaKoličina, kolicine[0]);
+        }
+
+        [TestMethod]
+        public void TestNaruciProizvode4()
+        {
+            Tržnica trznica = new Tržnica();
+            List<Proizvod> proizvodi = new List<Proizvod>() { new Proizvod(Namirnica.Voće, "jabuka", 5, DateTime.Now, 1.5, true) };
+            Štand stand = new Štand(new Prodavač("ime", "123", DateTime.Now.AddDays(-40), 0), DateTime.Now, proizvodi);
+            List<int> kolicine = new List<int>() { 4, 2 };
+            List<DateTime> rokovi = new List<DateTime>() { DateTime.Now.AddDays(10), DateTime.Now.AddDays(15) };
+
+            proizvodi.Add(new Proizvod(Namirnica.Voće, "narandza", 5, DateTime.Now, 1.5, true));
+            trznica.NaručiProizvode(stand, proizvodi, kolicine, rokovi, true);
+
+            //samim time sto nemamo bacen izuzetak znamo da if nije ispunjen ali ipak cemo izvrsiti assert
+            Assert.AreNotEqual(stand.Proizvodi[0].OčekivanaKoličina, kolicine[0]);
+        }
     }
 }
