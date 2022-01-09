@@ -3,7 +3,7 @@ using Pijaca;
 using System;
 using System.Collections.Generic;
 
-namespace TestProject1
+namespace TestProject2
 {
     [TestClass]
     public class UnitTest1
@@ -119,7 +119,7 @@ namespace TestProject1
             List<Proizvod> proizvodi = new List<Proizvod>() { kupus, paradajz, jabuka };
             List<Proizvod> proizvodiStand = new List<Proizvod>() { kupus, paradajz, jabuka };
             Štand štand = new Štand(prodavac, DateTime.Now.AddMonths(3), proizvodiStand);
-            List<int> kolicine = new List<int>() { 1, 2 };
+            List<int> kolicine = new List<int>() { 1, 2};
             List<DateTime> rokovi = new List<DateTime>() { new DateTime(2022, 3, 4), new DateTime(2022, 3, 3), new DateTime(2022, 4, 3) };
             bool svi = false;
             trznica.NaručiProizvode(štand, proizvodi, kolicine, rokovi, svi);
@@ -138,7 +138,7 @@ namespace TestProject1
             List<Proizvod> proizvodiStand = new List<Proizvod>() { kupus, paradajz, jabuka };
             Štand štand = new Štand(prodavac, DateTime.Now.AddMonths(3), proizvodiStand);
             List<int> kolicine = new List<int>() { 1, 2, 3 };
-            List<DateTime> rokovi = new List<DateTime>() { new DateTime(2022, 3, 4), new DateTime(2022, 3, 3) };
+            List<DateTime> rokovi = new List<DateTime>() { new DateTime(2022, 3, 4), new DateTime(2022, 3, 3)};
             bool svi = false;
             trznica.NaručiProizvode(štand, proizvodi, kolicine, rokovi, svi);
         }
