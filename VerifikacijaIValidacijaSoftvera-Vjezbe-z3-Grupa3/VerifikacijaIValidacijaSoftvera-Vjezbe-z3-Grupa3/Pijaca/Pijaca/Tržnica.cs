@@ -320,6 +320,21 @@ namespace Pijaca
             }
         }
 
+        public void NaručiProizvodeRefaktoring(Štand štand, List<Proizvod> proizvodi, List<int> količine, List<DateTime> rokovi)
+        {
+            if (proizvodi.Count != količine.Count || proizvodi.Count != rokovi.Count)
+                throw new ArgumentException("Pogrešan unos parametara!");
+
+            for (int i = 0; i < proizvodi.Count; i++)
+            {
+                    Proizvod pr = štand.Proizvodi.Find(p => p.ŠifraProizvoda == proizvodi[i].ŠifraProizvoda);
+                    if (pr == null)
+                        throw new ArgumentException("Nemoguće naručiti proizvod - nije registrovan na štandu!");
+
+                    pr.NaručiKoličinu(količine[i], rokovi[i]);  
+            }
+        }
+
         #endregion
     }
 }
