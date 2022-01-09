@@ -235,5 +235,28 @@ namespace TestProject1
             //samim time sto nemamo bacen izuzetak znamo da if nije ispunjen ali ipak cemo izvrsiti assert
             Assert.AreNotEqual(stand.Proizvodi[0].OčekivanaKoličina, kolicine[0]);
         }
+
+        [TestMethod]
+        public void TestPObuhvatPetlji1()
+        {
+            Tržnica trznica = new Tržnica();
+            Prodavač prodavac = new Prodavač("Prodavac", "100", DateTime.Now.AddMonths(-3), 1000);
+
+            Proizvod paprika = new Proizvod(Namirnica.Povrće, "paprika", 3, new DateTime(2021, 10, 10), 2, false);
+            Proizvod mrkva = new Proizvod(Namirnica.Povrće, "mrkva", 3, new DateTime(2021, 8, 8), 2, false);
+            Proizvod jagoda = new Proizvod(Namirnica.Voće, "jagoda", 3, new DateTime(2021, 9, 9), 2, false);
+
+            List<Proizvod> proizvodi = new List<Proizvod>() { paprika, mrkva, jagoda };
+            List<Proizvod> proizvodiStand = new List<Proizvod>() { paprika, mrkva, jagoda };
+            Štand štand = new Štand(prodavac, DateTime.Now.AddMonths(3), proizvodiStand);
+
+            List<int> kolicine = new List<int>() { 1, 2, 3 };
+            List<DateTime> rokovi = new List<DateTime>() { new DateTime(2022, 3, 4), new DateTime(2022, 3, 3), new DateTime(2022, 4, 3) };
+            bool svi = false;
+
+            trznica.NaručiProizvode(štand, proizvodi, kolicine, rokovi, svi);
+            Assert.AreEqual(paprika.OčekivanaKoličina, 1);
+            Assert.AreEqual(paprika.DatumOčekivaneKoličine, new DateTime(2022, 3, 4));
+        }
     }
 }
