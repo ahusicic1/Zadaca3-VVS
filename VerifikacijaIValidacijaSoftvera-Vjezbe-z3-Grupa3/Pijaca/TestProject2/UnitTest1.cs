@@ -7,7 +7,7 @@ namespace TestProject2
 {
     [TestClass]
     public class UnitTest1
-    {/*
+    {
         [TestMethod]
         public void TestRadSaProdavačima()
         {
@@ -87,7 +87,7 @@ namespace TestProject2
 
             Assert.IsTrue(true);
         }
-        */
+        
         [TestMethod]
         public void TestPObuhvatOdluke1()
         {
@@ -198,11 +198,12 @@ namespace TestProject2
             Tržnica trznica = new Tržnica();
             List<Proizvod> proizvodi = new List<Proizvod>() { new Proizvod(Namirnica.Voće, "jabuka", 5, DateTime.Now, 1.5, true) };
             Štand stand = new Štand(new Prodavač("ime", "123", DateTime.Now.AddDays(-40), 0), DateTime.Now, proizvodi);
-            List<int> kolicine = new List<int>();
-            List<DateTime> rokovi = new List<DateTime>();
+            List<int> kolicine = new List<int>() { 1 };
+            List<DateTime> rokovi = new List<DateTime>() { DateTime.Now.AddDays(10) };
 
-            proizvodi.Add(new Proizvod(Namirnica.Voće, "narandza", 5, DateTime.Now, 1.5, true));
-            trznica.NaručiProizvode(stand, proizvodi, kolicine, rokovi);
+            List<Proizvod> proizvodi2 = new List<Proizvod>() { new Proizvod(Namirnica.Voće, "narandza", 5, DateTime.Now, 1.5, false) };
+
+            trznica.NaručiProizvode(stand, proizvodi2, kolicine, rokovi);
         }
 
         [TestMethod]
